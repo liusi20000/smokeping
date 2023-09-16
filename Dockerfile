@@ -28,8 +28,8 @@ RUN \
 &&  cp /tmp/SmokePing-master/bin/smokeinfo /usr/bin \
 &&  cp /tmp/SmokePing-master/lib/*.pm /usr/share/perl5/vendor_perl/ \
 &&  cp -Rv /tmp/SmokePing-master/lib/Smokeping/* /usr/share/perl5/vendor_perl/Smokeping \
-&&  chmod ug+s /usr/bin/tcpping \
-&&  chmod +rx /usr/bin/tcpping
+&&  chmod ug+s /usr/bin/fping \
+&&  chmod +rx /usr/bin/fping
 
 # ports and volumes
 EXPOSE 80
