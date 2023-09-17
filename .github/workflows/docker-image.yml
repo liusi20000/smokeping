@@ -1,5 +1,4 @@
 name: Docker Image CI
-#触发器设置
 on:
   push:
     branches: [ "master" ]
