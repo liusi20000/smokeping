@@ -19,31 +19,31 @@ RUN \
     curl -L -o /tmp/smokeping.zip https://github.com/oetiker/SmokePing/archive/master.zip \
     echo "status::success"
 &&  cd /tmp \
-echo "status::success"
+echo "status::success" \
 &&  unzip -o smokeping.zip \
-echo "status::success"
+echo "status::success" \
 &&  cp -rv /tmp/SmokePing-master/htdocs/css /usr/share/webapps/smokeping/ \
-echo "status::success"
+echo "status::success" \
 &&  cp -rv /tmp/SmokePing-master/htdocs/js /usr/share/webapps/smokeping/ \
-echo "status::success"
+echo "status::success" \
 &&  rm -rf /usr/share/webapps/smokeping/cropper \
-echo "status::success"
+echo "status::success" \
 &&  cp /tmp/SmokePing-master/etc/basepage.html.dist /etc/smokeping/basepage.html \
-echo "status::success"
+echo "status::success" \
 &&  cp /tmp/SmokePing-master/bin/smokeping /usr/bin \
-echo "status::success"
+echo "status::success" \
 &&  cp /tmp/SmokePing-master/bin/smokeping_cgi /usr/bin \
-echo "status::success"
+echo "status::success" \
 &&  cp /tmp/SmokePing-master/bin/smokeinfo /usr/bin \
-echo "status::success"
+echo "status::success" \
 &&  cp /tmp/SmokePing-master/lib/*.pm /usr/share/perl5/vendor_perl/ \
-echo "status::success"
+echo "status::success" \
 &&  cp -rv /tmp/SmokePing-master/lib/Smokeping/* /usr/share/perl5/vendor_perl/Smokeping \
-echo "status::success"
+echo "status::success" \
 &&  chmod ug+s /usr/bin/tcpping \
-echo "status::success"
+echo "status::success" \
 &&  chmod +rx /usr/bin/tcpping
-echo "status::success"
+echo "status::success" \
 # ports and volumes
 EXPOSE 80
 VOLUME /config /data /cache
