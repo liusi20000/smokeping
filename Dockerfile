@@ -20,7 +20,7 @@ RUN \
 &&  unzip -o smokeping.zip \
 &&  cp -rv /tmp/SmokePing-master/htdocs/css /usr/share/webapps/smokeping/ \
 &&  cp -rv /tmp/SmokePing-master/htdocs/js /usr/share/webapps/smokeping/ \
-# &&  rm -rf /usr/share/webapps/smokeping/cropper \
+&&  rm -rf /usr/share/webapps/smokeping/cropper \
 &&  cp /tmp/SmokePing-master/etc/basepage.html.dist /etc/smokeping/basepage.html \
 &&  cp /tmp/SmokePing-master/bin/smokeping /usr/bin \
 &&  cp /tmp/SmokePing-master/bin/smokeping_cgi /usr/bin \
@@ -28,7 +28,7 @@ RUN \
 &&  cp /tmp/SmokePing-master/lib/*.pm /usr/share/perl5/vendor_perl/ \
 &&  cp -rv /tmp/SmokePing-master/lib/Smokeping/ /usr/share/perl5/vendor_perl/Smokeping \
 &&  chmod ug+s /usr/bin/tcpping \
-&&  chmod +rx /usr/bin/tcpping \
+&&  chmod +rx /usr/bin/tcpping
 
 # ports and volumes
 EXPOSE 80
