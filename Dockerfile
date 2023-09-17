@@ -7,7 +7,7 @@ ARG SMOKEPING_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL build_version="Extension to update Smokeping"
 LABEL maintainer="Divya Mahajan"
-
+perl   -version
 # copy tcpping script
 COPY tcpping /usr/bin/tcpping
 
