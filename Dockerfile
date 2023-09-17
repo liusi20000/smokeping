@@ -7,7 +7,6 @@ ARG SMOKEPING_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL build_version="Extension to update Smokeping"
 LABEL maintainer="Divya Mahajan"
-perl   -version
 # copy tcpping script
 COPY tcpping /usr/bin/tcpping
 
@@ -19,6 +18,7 @@ RUN \
     curl -L -o /tmp/smokeping.zip https://github.com/oetiker/SmokePing/archive/master.zip \
 &&  cd /tmp \
 &&  unzip -o smokeping.zip \
+&&  ls /usr/share \
 &&  cp -rv /tmp/SmokePing-master/htdocs/css /usr/share/webapps/smokeping/ \
 &&  cp -rv /tmp/SmokePing-master/htdocs/js /usr/share/webapps/smokeping/ \
 # &&  rm -rf /usr/share/webapps/smokeping/cropper \
