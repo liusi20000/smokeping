@@ -17,7 +17,6 @@ COPY root/ /
 # Update Smokeping
 RUN \
     curl -L -o /tmp/smokeping.zip https://github.com/oetiker/SmokePing/archive/master.zip \
-    echo "status::success"
 &&  cd /tmp \
 echo "status::success" \
 &&  unzip -o smokeping.zip \
