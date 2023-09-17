@@ -1,47 +1,64 @@
-name: Docker Image CI
+# 工作流名称
+name: Build Docker Image
+
+# push tag 时触发执行
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags:
+      - v*
 
-#项目任务，任务之间可以并行调度
+# 定义环境变量, 后面会使用
+# 定义 APP_NAME 用于 docker build-args
+# 定义 DOCKERHUB_REPO 标记 docker hub repo 名称
+env:
+  APP_NAME: httpproxy
+  DOCKERHUB_REPO: isayme/httpproxy
+
 jobs:
-
-  build:
-  #选择云端运行的环境
+  main:
+    # 在 Ubuntu 上运行
     runs-on: ubuntu-latest
     steps:
-    #uses代表使用一个模块，此处使用的是checkout模块，将github项目文件导入到当前环境中
-    - uses: actions/checkout@v3
-    #使用with跟在后面来为前面的模块输入参数
-      with:
-        submodules: 'true'
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - name: Login to DockerHub
-      uses: docker/login-action@v2
-      with:
-     #这里用到了github的secrets功能，避免账户和密码随仓库泄露
-       username: ${{ secrets.DOCKERHUB_USERNAME }}
-       password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build and push
-      #导入这个模块来完成自动编译和推送
-      uses: docker/build-push-action@v3
-      with:
-          context: .
+      # git checkout 代码
+      - name: Checkout
+        uses: actions/checkout@v2
+      # 设置 QEMU, 后面 docker buildx 依赖此.
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      # 设置 Docker buildx, 方便构建 Multi platform 镜像
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      # 登录 docker hub
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          # GitHub Repo => Settings => Secrets 增加 docker hub 登录密钥信息
+          # DOCKERHUB_USERNAME 是 docker hub 账号名.
+          # DOCKERHUB_TOKEN: docker hub => Account Setting => Security 创建.
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # 通过 git 命令获取当前 tag 信息, 存入环境变量 APP_VERSION
+      - name: Generate App Version
+        run: echo APP_VERSION=`git describe --tags --always` >> $GITHUB_ENV
+      # 构建 Docker 并推送到 Docker hub
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          # 是否 docker push
           push: true
-          #在这里通过加入需要编译的平台和前面配好的QEMU，buildx来达到多平台编译
-          platforms: linux/amd64,linux/arm64,linux/arm
-          #指定用户/仓库名
-          tags: wmdscjhdpy/test:latest
-    - name: Docker Hub Description
-      #这里是通过md文件自动生成dockerhub描述的模块，也可以不需要
-      uses: peter-evans/dockerhub-description@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        repository: wmdscjhdpy/autologin
-        readme-filepath: ./doc/docker-readme.md
+          # 生成多平台镜像, see https://github.com/docker-library/bashbrew/blob/v0.1.1/architecture/oci-platform.go
+          platforms: |
+            linux/386
+            linux/amd64
+            linux/arm/v6
+            linux/arm/v7
+            linux/arm64/v8
+          # docker build arg, 注入 APP_NAME/APP_VERSION
+          build-args: |
+            APP_NAME=${{ env.APP_NAME }}
+            APP_VERSION=${{ env.APP_VERSION }}
+          # 生成两个 docker tag: ${APP_VERSION} 和 latest
+          tags: |
+            ${{ env.DOCKERHUB_REPO }}:latest
+            ${{ env.DOCKERHUB_REPO }}:${{ env.APP_VERSION }}
