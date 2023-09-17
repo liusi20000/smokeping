@@ -41,8 +41,8 @@ echo "status::success" \
 echo "status::success" \
 &&  chmod ug+s /usr/bin/tcpping \
 echo "status::success" \
-&&  chmod +rx /usr/bin/tcpping
-echo "status::success" \
+&&  chmod +rx /usr/bin/tcpping \
+
 # ports and volumes
 EXPOSE 80
 VOLUME /config /data /cache
