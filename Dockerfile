@@ -26,7 +26,7 @@ RUN \
 &&  cp /tmp/SmokePing-master/bin/smokeping_cgi /usr/bin \
 &&  cp /tmp/SmokePing-master/bin/smokeinfo /usr/bin \
 &&  cp /tmp/SmokePing-master/lib/*.pm /usr/share/perl5/vendor_perl/ \
-&&  cp -rv /tmp/SmokePing-master/lib/Smokeping/* /usr/share/perl5/vendor_perl/Smokeping \
+&&  cp -rv /tmp/SmokePing-master/lib/Smokeping/ /usr/share/perl5/vendor_perl/Smokeping \
 &&  chmod ug+s /usr/bin/tcpping \
 &&  chmod +rx /usr/bin/tcpping \
 
