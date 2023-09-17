@@ -25,7 +25,7 @@ echo "status::success" \
 echo "status::success" \
 &&  cp -rv /tmp/SmokePing-master/htdocs/js /usr/share/webapps/smokeping/ \
 echo "status::success" \
-&&  rm -rf /usr/share/webapps/smokeping/cropper \
+# &&  rm -rf /usr/share/webapps/smokeping/cropper \
 echo "status::success" \
 &&  cp /tmp/SmokePing-master/etc/basepage.html.dist /etc/smokeping/basepage.html \
 echo "status::success" \
