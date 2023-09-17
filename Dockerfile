@@ -18,7 +18,8 @@ RUN \
     curl -L -o /tmp/smokeping.zip https://github.com/oetiker/SmokePing/archive/master.zip \
 &&  cd /tmp \
 &&  unzip -o smokeping.zip \
-&&  ls /usr/share \
+&&  ls /usr/share/perl5 \
+&&  ls /usr/share/perl5/vedor_perl \
 &&  cp -rv /tmp/SmokePing-master/htdocs/css /usr/share/webapps/smokeping/ \
 &&  cp -rv /tmp/SmokePing-master/htdocs/js /usr/share/webapps/smokeping/ \
 # &&  rm -rf /usr/share/webapps/smokeping/cropper \
